@@ -18,8 +18,12 @@ poco="/opt/poco-1.7.7-all"
 getpoko=poco-1.7.7-all.tar.gz
 oo="/opt/online"
 cpu=`nproc`
+
+# Edit these to your liking.
 maxcon=200
 maxdoc=100
+mydomain="whatevermydomainis"
+
 
 apt-get update && apt-get install dialog
 
@@ -34,7 +38,7 @@ sed -i 's/# deb-src/deb-src/g' $soli
 
 apt-get upgrade -y
 
-apt-get install sudo libegl1-mesa-dev libkrb5-dev python-polib git libkrb5-dev make openssl apache2 g++ libtool ccache libpng12-0 libpng12-dev libpcap0.8 libpcap0.8-dev libcunit1 libcunit1-dev libpng12-dev libcap-dev libtool m4 automake libcppunit-dev libcppunit-doc pkg-config npm wget nodejs-legacy libfontconfig1-dev  -y && sudo apt-get build-dep libreoffice -y
+apt-get install sudo libegl1-mesa-dev libkrb5-dev python-polib git libkrb5-dev make openssl g++ libtool ccache libpng12-0 libpng12-dev libpcap0.8 libpcap0.8-dev libcunit1 libcunit1-dev libpng12-dev libcap-dev libtool m4 automake libcppunit-dev libcppunit-doc pkg-config npm wget nodejs-legacy libfontconfig1-dev && sudo apt-get build-dep libreoffice -y
 
 useradd lool -G sudo
 mkdir /home/lool
@@ -101,10 +105,14 @@ WantedBy=multi-user.target
 EOT
 
 mkdir /etc/loolwsd
-openssl genrsa -out /etc/loolwsd/key.pem 4096
-openssl req -out /etc/loolwsd/cert.csr -key /etc/loolwsd/key.pem -new -sha256 -nodes -subj "/C=DE/OU=onlineoffice-install.com/CN=onlineoffice-install.com/emailAddress=nomail@nodo.com"
-openssl x509 -req -days 365 -in /etc/loolwsd/cert.csr -signkey /etc/loolwsd/key.pem -out /etc/loolwsd/cert.pem
-openssl x509 -req -days 365 -in /etc/loolwsd/cert.csr -signkey /etc/loolwsd/key.pem -out /etc/loolwsd/ca-chain.cert.pem
+#openssl genrsa -out /etc/loolwsd/key.pem 4096
+#openssl req -out /etc/loolwsd/cert.csr -key /etc/loolwsd/key.pem -new -sha256 -nodes -subj "/C=DE/OU=onlineoffice-install.com/CN=onlineoffice-install.com/emailAddress=nomail@nodo.com"
+#openssl x509 -req -days 365 -in /etc/loolwsd/cert.csr -signkey /etc/loolwsd/key.pem -out /etc/loolwsd/cert.pem
+#openssl x509 -req -days 365 -in /etc/loolwsd/cert.csr -signkey /etc/loolwsd/key.pem -out /etc/loolwsd/ca-chain.cert.pem
+# Use present letsencrypt certificates instead.
+ln -s /live/etc/letsencrypt/$mydomain/chain.pem /etc/loolwsd/ca-chain.cert.pem
+ln -s /live/etc/letsencrypt/$mydomain/privkey.pem /etc/loolwsd/key.pem
+ln -s /live/etc/letsencrypt/$mydomain/cert.pem /etc/loolwsd/cert.pem
 
 systemctl enable loolwsd.service
 #systemctl start loolwsd.service

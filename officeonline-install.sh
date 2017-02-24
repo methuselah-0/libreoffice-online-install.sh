@@ -25,8 +25,7 @@ maxdoc=100
 mydomain="whatevermydomainis"
 
 
-apt-get update && apt-get install dialog
-
+apt-get update && apt-get install dialog krb5-dev && apt-get build-dep libreoffice 
 
 dialog --backtitle "Information" \
 --title "Note" \
@@ -75,7 +74,7 @@ sudo -H -u lool bash -c "for dir in ./ ; do (cd "$oo" && libtoolize && aclocal &
 for dir in ./ ; do (cd "$oo" && npm install -g npm); done
 for dir in ./ ; do (cd "$oo" && npm install -g jake); done
 
-for dir in ./ ; do ( cd "$oo" && apt-get build-dep libreoffice && ./configure --enable-silent-rules --with-lokit-path=/opt/online/bundled/include --with-lo-path=/opt/libreoffice/instdir --with-max-connections=$maxcon --with-max-documents=$maxdoc --with-poco-includes=/usr/local/include --with-poco-libs=/usr/local/lib --enable-debug && make -j$cpu --directory=$oo); done
+for dir in ./ ; do ( cd "$oo" && ./configure --enable-silent-rules --with-lokit-path=/opt/online/bundled/include --with-lo-path=/opt/libreoffice/instdir --with-max-connections=$maxcon --with-max-documents=$maxdoc --with-poco-includes=/usr/local/include --with-poco-libs=/usr/local/lib --enable-debug && make -j$cpu --directory=$oo); done
 for dir in ./ ; do ( cd "$oo" && make install); done
 
 

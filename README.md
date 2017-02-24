@@ -18,7 +18,7 @@ INSTALLATION
 1. Clone/Download the files:
 git clone https://github.com/methuselah-0/officeonlin-install.sh
 2. Edit "mydomain" to where you have an existing letsencrypt certificate for.
-chmod +x officeonlin-install.sh/officeonline-install.sh
+zile officeonlin-install.sh/officeonline-install.sh
 4. Save changes with
 Ctrl+x s y and exit with Ctrl+x Ctrl+c
 5. Make it executable:

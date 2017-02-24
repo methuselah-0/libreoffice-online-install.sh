@@ -25,8 +25,7 @@ maxdoc=100
 mydomain="whatevermydomainis"
 
 
-apt-get update && apt-get install dialog krb5-dev && apt-get build-dep libreoffice 
-
+apt-get update && apt-get install dialog
 dialog --backtitle "Information" \
 --title "Note" \
 --msgbox 'THE INSTALLATION WILL TAKE REALLY VERY LONG TIME, 2-8 HOURS (It depends on the speed of your server), SO BE PATIENT PLEASE!!! You may see errors during the installation, just ignore them and let it do the work.' 10 78
@@ -37,7 +36,9 @@ sed -i 's/# deb-src/deb-src/g' $soli
 
 apt-get upgrade -y
 
-apt-get install sudo libegl1-mesa-dev libkrb5-dev python-polib git libkrb5-dev make openssl g++ libtool ccache libpng12-0 libpng12-dev libpcap0.8 libpcap0.8-dev libcunit1 libcunit1-dev libpng12-dev libcap-dev libtool m4 automake libcppunit-dev libcppunit-doc pkg-config npm wget nodejs-legacy libfontconfig1-dev && sudo apt-get build-dep libreoffice -y
+# Build some dependencies
+apt-get build-dep libreoffice
+apt-get install sudo libegl1-mesa-dev libkrb5-multidev libkrb5-dev python-polib git libkrb5-dev make openssl g++ libtool ccache libpng12-0 libpng12-dev libpcap0.8 libpcap0.8-dev libcunit1 libcunit1-dev libpng12-dev libcap-dev libtool m4 automake libcppunit-dev libcppunit-doc pkg-config npm wget nodejs-legacy libfontconfig1-dev && sudo apt-get build-dep libreoffice -y
 
 useradd lool -G sudo
 mkdir /home/lool

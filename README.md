@@ -24,7 +24,7 @@ Ctrl+x s y and exit with Ctrl+x Ctrl+c
 5. Make it executable:
 chmod +x officeonlin-install.sh/officeonline-install.sh
 5. Run the script
-./chmod +x officeonlin-install.sh/officeonline-install.sh
+./officeonlin-install.sh/officeonline-install.sh
 
 Until prerequisite packages have finished installing you need to be attentive and answer yes to possible questions. After that the building process will run on it's own.
 

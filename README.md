@@ -16,9 +16,17 @@ Enjoy!!!
 ## This Fork Info
 Builds were not working so I tried to make this fork more failsafe by having source versions set to known-to-work commits.
 
-Also I wanted a more commented version to better understand the installation process.
+I also wanted a more commented version to better understand the installation process.
 
-I used this script with Nextcloud running on Debian Testing with nginx, mariadb, and php7.
+I used this script with Nextcloud running on Debian Testing with nginx, mariadb, and php7 with the following source versions:
+
+LibreOffice Core commit=4c0040b6f1e3137e0d40aab09088c43214db3165
+url=https://github.com/LibreOffice/core.git
+
+Poco=poco-1.7.7-all.tar.gz
+
+LibreOffice Online=91666d7cd354ef31344cdd88b57d644820dcd52c
+ourl="https://github.com/LibreOffice/online"
 
 ## Prerequisites
 It's intended to be used with a running NextCloud server.

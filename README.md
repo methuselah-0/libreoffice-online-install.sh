@@ -8,7 +8,7 @@ This script is free software: you can redistribute it and/or modify it under the
 This script is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
-It will install libreoffice in/opt/libreoffice, Poco in /opt/poco and onlineOffice in /opt/online
+It will install libreoffice in /opt/libreoffice, Poco in /opt/poco and onlineOffice in /opt/online and you will get the LibreOffice Online web-socket daemon running on localhost:9980 which you can conncet to from Nextcloud.
 
 Your can manage your service (systemctl start loolwsd.service) [stop and restart]
 Enjoy!!!
@@ -17,6 +17,8 @@ Enjoy!!!
 Builds were not working so I tried to make this fork more failsafe by having source-files set to known-to-work commits.
 
 Also I wanted a more commented version to better understand the installation process.
+
+I used this script with Nextcloud running on Debian Testing with nginx, mariadb, and php7.
 
 ## Prerequisites
 It's intended to be used with a running NextCloud server.

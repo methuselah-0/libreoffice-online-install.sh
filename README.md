@@ -1,4 +1,5 @@
 # officeonline-install.sh
+
 Script to install Office Online on Ubuntu 16.04 and Debian 8.7 
 
 
@@ -22,10 +23,10 @@ zile officeonlin-install.sh/officeonline-install.sh
 4. Save changes with
 Ctrl+x s y and exit with Ctrl+x Ctrl+c
 5. Make it executable:
-chmod +x officeonlin-install.sh/officeonline-install.sh
+cd officeonlin-install.sh && sudo chmod +x install.sh
 5. Run the script
-./officeonlin-install.sh/officeonline-install.sh
+sudo ./install.sh
 
-Until prerequisite packages have finished installing you need to be attentive and answer yes to possible questions. After that the building process will run on it's own.
+The building process should run on it's own.
 
 THE INSTALLATION WILL TAKE REALLY VERY LONG TIME SO BE PATIENT PLEASE!!! You may eventually see errors during the installation, just ignore them."

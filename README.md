@@ -1,4 +1,4 @@
-# Fork of officeonline-install.sh by husisusi
+# officeonline-install.sh by husisusi
 
 Script to install Office Online on Ubuntu 16.04 and Debian 8.7 
 
@@ -13,13 +13,17 @@ It will install libreoffice in/opt/libreoffice, Poco in /opt/poco and onlineOffi
 Your can manage your service (systemctl start loolwsd.service) [stop and restart]
 Enjoy!!!
 
+## This Fork Info
+Builds were not working so I tried to make this fork more failsafe by having source-files set to known-to-work commits.
+
+Also I wanted a more commented version to better understand the installation process.
+
 ## Prerequisites
 It's intended to be used with a running NextCloud server.
 
 You should have setup letsencrypt certificates for your domain.
 
-INSTALLATION
-
+## Installation
 1. Clone/Download the files:
 git clone https://github.com/methuselah-0/officeonlin-install.sh
 2. Edit "mydomain" to where you have an existing letsencrypt certificate for.

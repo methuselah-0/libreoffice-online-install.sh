@@ -8,13 +8,13 @@ This script is free software: you can redistribute it and/or modify it under the
 This script is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
-It will install libreoffice in /opt/libreoffice, Poco in /opt/poco and onlineOffice in /opt/online and you will get the LibreOffice Online web-socket daemon running on localhost:9980 which you can conncet to from Nextcloud.
+It will install LibreOffice Core in /opt/core, Poco in /opt/poco and LibreOffice Online in /opt/online and you will get the LibreOffice Online web-socket daemon (loolwsd) running on localhost:9980 which you can connect to from Nextcloud.
 
-Your can manage your service (systemctl start loolwsd.service) [stop and restart]
+Your can manage your service with systemctl start/stop/status loolwsd.service.
 Enjoy!!!
 
 ## This Fork Info
-Builds were not working so I tried to make this fork more failsafe by having source-files set to known-to-work commits.
+Builds were not working so I tried to make this fork more failsafe by having source versions set to known-to-work commits.
 
 Also I wanted a more commented version to better understand the installation process.
 
@@ -23,17 +23,17 @@ I used this script with Nextcloud running on Debian Testing with nginx, mariadb,
 ## Prerequisites
 It's intended to be used with a running NextCloud server.
 
-You should have setup letsencrypt certificates for your domain.
+You should have setup valid letsencrypt certificates for your domain in /etc/letsencrypt/<mydomain>.tld/*
 
 ## Installation
 1. Clone/Download the files:
 git clone https://github.com/methuselah-0/officeonlin-install.sh
-2. Edit "mydomain" to where you have an existing letsencrypt certificate for.
-zile officeonlin-install.sh/officeonline-install.sh
+2. Edit "mydomain" passwords etc. to where you have your existing letsencrypt certificates.
+cd libre-office-online && zile install.sh
 4. Save changes with
 Ctrl+x s y and exit with Ctrl+x Ctrl+c
 5. Make it executable:
-cd officeonlin-install.sh && sudo chmod +x install.sh
+sudo chmod +x install.sh
 5. Run the script
 sudo ./install.sh
 

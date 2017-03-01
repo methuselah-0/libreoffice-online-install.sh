@@ -24,7 +24,7 @@ Enjoy!!!
 ## Prerequisites
 It's intended to be used with a running NextCloud server.
 
-You should have setup valid letsencrypt certificates for your domain in /etc/letsencrypt/<mydomain>.tld/*
+You should have setup valid letsencrypt certificates for your domain in /etc/letsencrypt/mydomain.tld/*
 
 ## Installation
 1. Clone/Download the files:
@@ -37,7 +37,7 @@ Ctrl+x s y and exit with Ctrl+x Ctrl+c
 sudo chmod +x install.sh
 5. Run the script
 sudo ./install.sh
-6. Login as admin in your nextcloud instance and go to apps section and enable the Collabora Online app. Then to Admin->Admin->Collabora Online and enter your url and port number. (e.g. if you visit your cloud instance at https://nextcloud.selfhosted.xyz you would enter https://nextcloud.selfhosted.xyz:9980 )
+6. Login as admin in your nextcloud instance and go to apps section and enable the Collabora Online app. Then to Admin->Admin->Collabora Online and enter your url and port number. (e.g. if you visit your cloud instance at https://nextcloud.mydomain.com you would enter https://nextcloud.mydomain.com:9980 )
 Read the first run info dialog box and then the building process should run on it's own.
 
 THE INSTALLATION WILL TAKE REALLY VERY LONG TIME SO BE PATIENT PLEASE!!! You may eventually see errors during the installation, just ignore them."

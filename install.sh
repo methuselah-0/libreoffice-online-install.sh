@@ -252,7 +252,7 @@ EnvironmentFile=-/etc/sysconfig/loolwsd
 ExecStart=/opt/online/loolwsd --o:sys_template_path=/opt/online/systemplate --o:lo_template_path=/opt/core/instdir  --o:child_root_path=/opt/online/jails --o:storage.filesystem[@allow]=true --o:admin_console.username=admin --o:admin_console.password=office1234
 User=lool
 KillMode=control-group
-Restart=always
+Restart=on-abnormal
 
 [Install]
 WantedBy=multi-user.target
@@ -275,12 +275,12 @@ sed - i "s/The\ username\ of\ the\ admin\ console\.\ Must\ be\ set\./$adminuser/
 #
 # Enable as startup service
 echo "Will now enable loolwsd as a startup service"
-systemctl enable loolwsd.service
+systemctl daemon-reload && systemctl enable loolwsd.service
 #systemctl start loolwsd.service
 
 dialog --backtitle "Information" \
 --title "Note" \
---msgbox "You can loolwsd.service which is the service running LibreOffice Online server by using: systemctl {start,stop,status} loolwsd.service.\n\n * Your admin username and password is set in /lib/systemd/system/loolwsd.service and should be set to "$adminuser" and "$adminpass" respectively." 20 145
+--msgbox "You can start loolwsd.service which is the service running LibreOffice Online by using: systemctl {start,stop,status} loolwsd.service.\n\n * Your admin username and password is set in /lib/systemd/system/loolwsd.service and should be set to "$adminuser" and "$adminpass" respectively. Sometimes restarting the server too frequently or over ssh causes issues, it doesn't mean it's a problem with your installation." 20 145
 clear
 sleep 2
 systemctl status loolwsdy

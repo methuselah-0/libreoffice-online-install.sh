@@ -29,8 +29,8 @@ You should have setup valid letsencrypt certificates for your domain in /etc/let
 ## Installation
 1. Clone/Download the files:
 git clone https://github.com/methuselah-0/officeonlin-install.sh
-2. Edit "mydomain" passwords etc. to where you have your existing letsencrypt certificates.
-cd libre-office-online && zile install.sh
+2. Edit "mydomain", admin password, location of your existing letsencrypt certificates, maximum document connections etc.
+cd libre-office-online && emacs -nw install.sh
 4. Save changes with
 Ctrl+x s y and exit with Ctrl+x Ctrl+c
 5. Make it executable:

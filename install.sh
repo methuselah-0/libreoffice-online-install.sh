@@ -146,25 +146,26 @@ mkdir -p /usr/local/var/cache/loolwsd
 # Fix file ownership
 chown -R lool:lool /usr/local/var/cache/loolwsd
 ### Post-Install Config - Certificates ###
-# For some reason loolwsd looks in /etc/loolwsd for the self generated ssl certificates it requires which can be fixed in at least 3 ways:
+# loolwsd looks in /etc/loolwsd for the self generated ssl certificates which are actually in ./etc/loolws. This can be fixed in at least 3 ways:
 #
-# Method 1. Link existing certificates there:
+# Method 1. Link existing certificates there. Had permissions issue so can't use for now.
 #sudo mkdir -p /etc/loolwsd
 #ln -s /etc/letsencrypt/live/$mydomain/chain.pem /etc/loolwsd/ca-chain.cert.pem
 #ln -s /etc/letsencrypt/live/$mydomain/privkey.pem /etc/loolwsd/key.pem
-#ln -s /etc/letsencrypt/live/$mydomain/cert.pem /etc/loolwsd/cert.pem
+#ln -s /etc/letsencrypt/live/$mydomain/cert.pem /etc/loolwsd/cert.pemn
 #
-# Method 2: 
+# Method 2. Generate new keys and sign them. Has drawback of not being signed by trusted authority.
 # openssl genrsa -out /etc/loolwsd/key.pem 4096
 #openssl req -out /etc/loolwsd/cert.csr -key /etc/loolwsd/key.pem -new -sha256 -nodes -subj "/C=DE/OU=cloud.selfhosted.xyz.com/CN=cloud.selfhosted..xyz/emailAddress=hostmaster@selfhosted.xyz"
 #openssl x509 -req -days 365 -in /etc/loolwsd/cert.csr -signkey /etc/loolwsd/key.pem -out /etc/loolwsd/cert.pem
 #openssl x509 -req -days 365 -in /etc/loolwsd/cert.csr -signkey /etc/loolwsd/key.pem -out /etc/loolwsd/ca-chain.cert.pem 
 #
-# Method 3: copy all certs and keys to where you want them and set correct location.
+# Method 3: copy all certs and keys to where you want them and set correct location and permissions on the copy.
+# This is because lool user doesn't have access rights to /etc/letsencrypt. Works! :D
 mkdir -p $loo/etc/mykeys
-cp /etc/letsencrypt/live/$mydomain/* $loo/etc/mykeys
-sed -i "s/\/etc\/loolwsd/$loo\/etc\/mykeys/g' /opt/online/loolwsd.xml"
-echo "Using LetsEncrypt keys that was copied from /etc/letsencrypt/live/<mydomain>/* to etc/mykeys inside LibreOffice Online installation directory."
+cp /etc/letsencrypt/live/$mydomain/* $loo/etc/mykeys # Make cronjob for this?
+sed -i "s/\/etc\/loolwsd/$loo\/etc\/mykeys/g" $loo/loolwsd.xml
+echo "Using LetsEncrypt keys that was copied from /etc/letsencrypt/live/$mydomain/* to $mydomain/etc/mykeys. Remember to copy and overwrite these certificates with renewd ones and to sudo chown -R lool:lool $loo/etc/mykeys"
 # Fix file ownership.
 chown -R lool:lool /etc/loolwsd
 # Now loolwsd should run without SSL errors.
@@ -239,7 +240,7 @@ echo "If loloeaflet is installed which it isn't by default you should be able to
 echo "To access the admin panel go to: https://localhost:9980/loleaflet/dist/admin/admin.html"
 
 #
-# Systemd service to run loolwsd with loleaflet at startup:
+# Systemd service to run loolwsd with loleaflet at startup (dunno how to catch variables so will use sed below):
 cat <<EOT > /lib/systemd/system/loolwsd.service
 
 [Unit]
@@ -258,7 +259,7 @@ WantedBy=multi-user.target
 
 EOT
 #
-# Use sed with double quotes to evaluate variables.
+# Use sed with double quotes to evaluate variables and fix the systemd service file.
 sed -i "s/password=office1234/password=$adminpass/g" /lib/systemd/system/loolwsd.service
 sed -i "s/username=admin/$adminuser/g" /lib/systemd/system/loolwsd.service
 #

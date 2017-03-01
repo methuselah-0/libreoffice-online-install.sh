@@ -40,4 +40,8 @@ sudo ./install.sh
 6. Login as admin in your nextcloud instance and go to apps section and enable the Collabora Online app. Then to Admin->Admin->Collabora Online and enter your url and port number. (e.g. if you visit your cloud instance at https://nextcloud.mydomain.com you would enter https://nextcloud.mydomain.com:9980 )
 Read the first run info dialog box and then the building process should run on it's own.
 
+You might need to go to /opt/online/loolwsd.xml and put a line like this there next to the other similar ones.
+<host desc="Regex pattern of hostname to allow or deny." allow="true" cloud.mydomain.com
+
+
 THE INSTALLATION WILL TAKE REALLY VERY LONG TIME SO BE PATIENT PLEASE!!! You may eventually see errors during the installation, just ignore them."

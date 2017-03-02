@@ -24,20 +24,24 @@ Enjoy!!!
 ## Prerequisites
 It's intended to be used with a running NextCloud server.
 
-You should have setup valid letsencrypt certificates for your domain in /etc/letsencrypt/<mydomain>.tld/*
+You should have setup valid letsencrypt certificates for your domain in /etc/letsencrypt/mydomain.tld/*
 
 ## Installation
 1. Clone/Download the files:
 git clone https://github.com/methuselah-0/officeonlin-install.sh
-2. Edit "mydomain" passwords etc. to where you have your existing letsencrypt certificates.
-cd libre-office-online && zile install.sh
+2. Edit "mydomain", admin password, location of your existing letsencrypt certificates, maximum document connections etc.
+cd libre-office-online && emacs -nw install.sh
 4. Save changes with
 Ctrl+x s y and exit with Ctrl+x Ctrl+c
 5. Make it executable:
 sudo chmod +x install.sh
 5. Run the script
 sudo ./install.sh
-6. Login as admin in your nextcloud instance and go to apps section and enable the Collabora Online app. Then to Admin->Admin->Collabora Online and enter your url and port number. (e.g. if you visit your cloud instance at https://nextcloud.selfhosted.xyz you would enter https://nextcloud.selfhosted.xyz:9980 )
+6. Login as admin in your nextcloud instance and go to apps section and enable the Collabora Online app. Then to Admin->Admin->Collabora Online and enter your url and port number. (e.g. if you visit your cloud instance at https://nextcloud.mydomain.com you would enter https://nextcloud.mydomain.com:9980 )
 Read the first run info dialog box and then the building process should run on it's own.
+
+You might need to go to /opt/online/loolwsd.xml and put a line like this there next to the other similar ones.
+<host desc="Regex pattern of hostname to allow or deny." allow="true" cloud.mydomain.com
+
 
 THE INSTALLATION WILL TAKE REALLY VERY LONG TIME SO BE PATIENT PLEASE!!! You may eventually see errors during the installation, just ignore them."

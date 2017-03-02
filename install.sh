@@ -23,8 +23,13 @@ maxdoc=100
 mydomain="secondleveldomain.tld" #should match /etc/letsencrypt/live/<secondleveldomain.tld>
 adminpass="adminpassword"
 adminuser="adminuser"
+
 # Don't edit the ones below.
+#
+# Rootdir is where server programs go.
 rootdir="/opt"
+# nc is where nextcloud rootdir goes.
+nc="/var/www/$mydomain/nextcloud"
 soli="/etc/apt/sources.list"
 loc="/opt/core"
 loccommit="4c0040b6f1e3137e0d40aab09088c43214db3165" # known to work commit number
@@ -38,6 +43,7 @@ getloourl="https://github.com/LibreOffice/online"
 loocommit="91666d7cd354ef31344cdd88b57d644820dcd52c" # known-to-work commit number (=SHA1 hash). Ref: https://gist.github.com/m-jowett/0f28bff952737f210574fc3b2efaa01a
 cpu=`nproc`
 
+
 ### SHOW INFO MESSAGE AND DO PREREQUISITES ###
 #
 # Abort and throw message if script isn't invoked as root or sudo.
@@ -45,7 +51,7 @@ if [[ `id -u` -ne 0 ]] ; then echo 'Please run me as root or "sudo ./officeonlin
 clear
 apt-get update && apt-get upgrade && apt-get install dialog beep sleep -y 
 dialog --backtitle "Information" \
---title "Note" \
+--TITLE "NOTE" \
 --msgbox '* First edit the script top section with some global variables to set admin username and password etc and then rerun the script.\n\n* You may also need to manualy uncomment your deb-src main line in /etc/apt/sources.list or you can uncomment a sed line in the script that attempts to do it for you.\n\n* If you have a DNSSec-enabled zonefile with TLSA-records you should add a record for port 9980 because the LibreOffice online daemon runs on that port. \n\n* To get a complete logfile run this script with ./office-online.sh > output.txt.\n\n* Press Ctrl+c twice to abort the script.\n\nTHE INSTALLATION WILL TAKE REALLY VERY LONG TIME, 2-8 HOURS (It depends on the speed of your server), SO BE PATIENT PLEASE!!!\n\nYou may see errors during the installation, just ignore them and let it do the work.' 30 150
 clear
 # Create user
@@ -172,7 +178,10 @@ chown -R lool:lool /etc/loolwsd
 # Now you should be able to run loolwsd as an unprivilledged user (not root). For running "manually" see REAL RUN and systemd unit below.
 echo "make run will now be issued issued from "$loo" as user lool. You must kill this process from another terminal" && sleep 5
 cd $loo && sudo -u lool bash -c "make run"
-
+# log-file location, default is in /tmp I want /var/log/libreoffice-online
+mkdir -p /var/log/libreoffice-online
+chown lool:lool /var/log/libreoffice-online
+# make sed command on $lool/loolwsd.xml replacing log location line.
 
 ### 2.3. BUILDING LIBREOFFICE ON-LINE CLIENT (LOLEAFLET) ###
 #

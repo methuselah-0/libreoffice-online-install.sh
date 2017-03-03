@@ -19,6 +19,7 @@ I used this script with Nextcloud running on Debian Testing with nginx, mariadb,
   - LibreOffice Core commit=4c0040b6f1e3137e0d40aab09088c43214db3165 url=https://github.com/LibreOffice/core.git
   - Poco=poco-1.7.7-all.tar.gz url: http://pocoproject.org/releases/poco-1.7.7/poco-1.7.7-all.tar.gz
   - LibreOffice Online=91666d7cd354ef31344cdd88b57d644820dcd52c url=https://github.com/LibreOffice/online
+
 It will install LibreOffice Core in /opt/core, Poco in /opt/poco and LibreOffice Online in /opt/online and you will get the LibreOffice Online web-socket daemon (loolwsd) running on localhost:9980 which you can connect to from Nextcloud. Your can manage your service with systemctl start/stop/status loolwsd.service.
 
 Enjoy!!!

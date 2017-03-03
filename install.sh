@@ -20,25 +20,26 @@
 # The rest should be left as is. If you edit variable names anyway you have to edit systemd unit below as well.
 maxcon=200
 maxdoc=100
-mydomain="secondleveldomain.tld" #should match /etc/letsencrypt/live/<secondleveldomain.tld>
-adminpass="adminpassword"
-adminuser="adminuser"
+mydomain="secondleveldomain.tld" #should match /etc/letsencrypt/live/<secondleveldomain.tld> without a trailing '/'
+adminuser="adminuser" # for the admin console which after install can be accessed at https://localhost:9980/dist/admin/admin.html
+adminpass="adminpassword" 
+
 
 # Don't edit the ones below.
 #
 # Rootdir is where server programs go.
 rootdir="/opt"
-# nc is where nextcloud rootdir goes.
+# nc is where nextcloud rootdir goes, not used for now.
 nc="/var/www/$mydomain/nextcloud"
 soli="/etc/apt/sources.list"
-loc="/opt/core"
+loc="/opt/core" # Libre Office Core
 loccommit="4c0040b6f1e3137e0d40aab09088c43214db3165" # known to work commit number
 getlocourl="https://github.com/LibreOffice/core.git"
 pocobase="/opt/poco"
 getpocourl="http://pocoproject.org/releases/poco-1.7.7/poco-1.7.7-all.tar.gz" # known-to-work poco version
 getpocofile=poco-1.7.7-all.tar.gz
 poco="/opt/poco/"poco-1.7.7-all""
-loo="/opt/online"
+loo="/opt/online" # LibreOffice Online
 getloourl="https://github.com/LibreOffice/online"
 loocommit="91666d7cd354ef31344cdd88b57d644820dcd52c" # known-to-work commit number (=SHA1 hash). Ref: https://gist.github.com/m-jowett/0f28bff952737f210574fc3b2efaa01a
 cpu=`nproc`
@@ -56,7 +57,7 @@ dialog --backtitle "Information" \
 clear
 # Create user
 useradd lool -s /bin/bash && mkdir -p /home/lool && chown lool:lool /home/lool -R
-# Make user run sudo without entering password. Needed for running make for lool which invokes sudo /sbin/setcap 
+# Make user run sudo without entering password. Needed for running make as lool-user which invokes sudo /sbin/setcap 
 echo "lool ALL=NOPASSWD:ALL" >> /etc/sudoers
 
 ### 1. DOWNLOAD & COMPILE LIBREOFFICE CORE ###
@@ -76,7 +77,7 @@ cd $loo && git reset --hard $loccommit
 chown -R lool:lool $loc
 # Build 
 echo "Will now start building LibreOffice Core, from commit: "${loccommit}""
-echo "The build will run make with -i flag to ignore a canvas_emfplus unit test which should be safe"
+echo "The build will run make with -i flag (ignore errors) to ignore a canvas_emfplus unit test which should be safe"
 beep && sleep 5
 cd $loc && ./autogen.sh --without-help --without-myspell-dicts
 cd $loc && ./configure
@@ -174,13 +175,13 @@ sed -i "s/\/etc\/loolwsd/$loo\/etc\/mykeys/g" $loo/loolwsd.xml
 echo "Using LetsEncrypt keys that was copied from /etc/letsencrypt/live/$mydomain/* to $mydomain/etc/mykeys. Remember to copy and overwrite these certificates with renewd ones and to sudo chown -R lool:lool $loo/etc/mykeys"
 # Fix file ownership.
 chown -R lool:lool /etc/loolwsd
-# Now loolwsd should run without SSL errors.
-# Now you should be able to run loolwsd as an unprivilledged user (not root). For running "manually" see REAL RUN and systemd unit below.
-echo "make run will now be issued issued from "$loo" as user lool. You must kill this process from another terminal" && sleep 5
+# loolwsd should now run without SSL errors.
+# Should now be able to run loolwsd as an unprivilledged user (not root). For running "manually" see REAL RUN and systemd unit below.
+echo "make run will now be issued from "$loo" as user lool. You must kill this process from another terminal" && beep && sleep 5
 cd $loo && sudo -u lool bash -c "make run"
 # log-file location, default is in /tmp I want /var/log/libreoffice-online
-mkdir -p /var/log/libreoffice-online
-chown lool:lool /var/log/libreoffice-online
+mkdir -p /var/log/nextcloud
+chown lool:lool /var/log/nextcloud
 # make sed command on $lool/loolwsd.xml replacing log location line.
 
 ### 2.3. BUILDING LIBREOFFICE ON-LINE CLIENT (LOLEAFLET) ###
@@ -280,6 +281,7 @@ sed -i "s/username=admin/$adminuser/g" /lib/systemd/system/loolwsd.service
 # Set correct admin username and password in loolwsd configuration file. 
 sed - i "s/The\ password\ of\ the\ admin\ console\.\ Must\ be\ set\./$adminpass/g" $loo/loolwsd.xml
 sed - i "s/The\ username\ of\ the\ admin\ console\.\ Must\ be\ set\./$adminuser/g" $loo/loolwsd.xml
+# TODO set correct domain in loolwsd.xml; something like <host desc="Regex pattern of hostname to allow or deny." allow="true" cloud.mydomain.com
 
 #
 # Enable as startup service

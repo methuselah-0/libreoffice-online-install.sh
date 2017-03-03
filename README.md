@@ -1,4 +1,4 @@
-# officeonline-install.sh by husisusi
+# officeonline-install.sh
 
 Script to install Office Online on Ubuntu 16.04 and Debian 8.7 
 
@@ -9,6 +9,8 @@ This script is distributed in the hope that it will be useful, but WITHOUT ANY W
 You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
 ## This Fork Info
+This is my first ever written bash-script. Use at your own risk.
+
 Reasons:
   - Builds were not working so I tried to make this fork more failsafe by having source versions set to known-to-work commits.
   - I also wanted a more commented version to better understand the installation process.
